@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+}
+
+:root {
+    /* Dark theme colors */
+    --text-color: #1e3a8a;  /*  --text-color: #edf3ff; */
+    --subheading-color: #818cf8; /* --subheading-color: #97a7ca;*/
+    --placeholder-color: #c3cdde;
+    --primary-color: #e0f2fe; /* --primary-color: #101623; */
+    --secondary-color: #f0f9ff; /* --secondary-color: #283045;*/
+    --secondary-hover-color: #a5b4fc;  /*--secondary-hover-color: #333e58; */
+    --scrollbar-color: #626a7f;
+    --sidebar-width: 250px;
+    --sidebar-collapsed-width: 70px;
+
+    /* Layout and UI Colors */
+    --background-light: #1e273d;
+    --accent-color: #64b5f6; /* Light Blue for highlights */
+    --button-color: #5c6bc0; /* Indigo for buttons */
+    --button-hover-color: #3949ab;
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    line-height: 1.6;
+}
+
+.container {
+    width: 70%; /* Adjust for the new single-column layout */
+    margin: 20px auto;
+    background-color: var(--secondary-color);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Reduced Shadow */
+}
+
+h1, h2 {
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+section {
+    margin-bottom: 30px;
+    padding: 25px;
+    border: 1px solid var(--secondary-hover-color);
+    border-radius: 8px;
+    background-color: var(--secondary-color);
+}
+
+/* Section Selection */
+#section-selection {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+#section-selection label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--subheading-color);
+}
+
+#section-selection select {
+    width: auto; /* Adjust width to content */
+    display: block; /* Align label and select vertically */
+    padding: 12px;
+    font-size: 1em;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: 1px solid var(--secondary-hover-color);
+    border-radius: 6px;
+}
+
+#managing-for {
+    color: var(--subheading-color);
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* Document Actions */
+#document-actions {
+    text-align: left;
+    /* Add any specific styling for this section */
+}
+
+/* Vertical Button Group */
+.button-group-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start; /* Align items to the start */
+}
+
+.button-group-vertical button {
+    background-color: var(--button-color);
+    color: white;
+    padding: 14px 22px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    width: 200px;
+    text-align: center;
+
+}
+
+.button-group-vertical button:hover {
+    background-color: var(--button-hover-color);
+    transform: translateY(-2px);
+}
+.hidden {
+    display: none;
+}
+
+/* Results and Other Actions */
+#selected-functionality {
+    margin-top: 30px;
+    padding: 25px;
+    border: 1px solid var(--secondary-hover-color);
+    border-radius: 8px;
+    background-color: var(--secondary-color);
+}
+
+#selected-functionality label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--subheading-color);
+}
+
+#selected-functionality select,
+#selected-functionality input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--secondary-hover-color);
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    transition: border-color 0.3s ease;
+}
+
+#selected-functionality select:focus,
+#selected-functionality input[type="file"]:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+#selected-functionality #documents-list,
+#selected-functionality #delete-result,
+#selected-functionality #upload-result,
+#selected-functionality{
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid var(--secondary-hover-color);
+    border-radius: 8px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    word-wrap: break-word;
+    overflow-x: auto;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Management</title>
+    <link rel="stylesheet" href="stats/test1.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">DocManager</div>
+        <button id="theme-toggle" class="theme-toggle">
+            <span class="theme-icon">☀️</span>
+        </button>
+    </nav>
+
+    <div class="hero">
+        <h1>Document Management System</h1>
+        <p>Efficiently manage your documents across different sections</p>
+    </div>
+
+    <main class="container">
+        <div class="card">
+            <div class="section-select">
+                <h2>Select section</h2>
+                <select id="section-dropdown">
+                    <option value="Finance">Finance</option>
+                    <option value="Adv-Manufacturing">Adv-Manufacturing</option>
+                    <option value="Adv-Inventory">Adv-Inventory</option>
+                    <option value="Adv-HumanResources">Adv-HumanResources(HR)</option>
+                    <option value="Adv-Purchasing">Adv-Purchasing</option>
+                    <option value="Adv-Sales">Adv-Sales</option>
+                    <option value="Adv-Products">Adv-Products</option>
+                </select>
+            </div>
+
+            <h3 class="subheading">Managing documents for collection: finance_documents</h3>
+            
+            <div class="button-group">
+                <div class="dropdown-container">
+                    <button class="action-button">Show Document</button>
+                    <div class="dropdown-content">
+                        <div class="dropdown-item">Document 1</div>
+                        <div class="dropdown-item">Document 2</div>
+                        <div class="dropdown-item">Document 3</div>
+                    </div>
+                </div>
+
+                <div class="dropdown-container">
+                    <button class="action-button">Insert Document</button>
+                    <div class="dropdown-content">
+                        <input type="file" class="file-input">
+                        <button class="upload-btn">Upload</button>
+                    </div>
+                </div>
+
+                <div class="dropdown-container">
+                    <button class="action-button">Delete Document</button>
+                    <div class="dropdown-content">
+                        <div class="dropdown-item">Document 1</div>
+                        <div class="dropdown-item">Document 2</div>
+                        <div class="dropdown-item">Document 3</div>
+                    </div>
+                </div>
+
+                <div class="dropdown-container">
+                    <button class="action-button">Show Tables</button>
+                    <div class="dropdown-content">
+                        <div class="dropdown-item">Table 1</div>
+                        <div class="dropdown-item">Table 2</div>
+                        <div class="dropdown-item">Table 3</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="stats/test.js"></script>
+</body>
+</html>

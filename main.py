@@ -98,7 +98,7 @@ async def read_root(request: Request):
     tables = []
 
     # Pass dynamically populated dropdown options to the template
-    return templates.TemplateResponse("index.html", {
+    return templates.TemplateResponse("test.html", {
         "request": request,
         "models": models,
         "databases": databases,  # Dynamically populated database dropdown
@@ -523,13 +523,23 @@ async def admin_page(request: Request):
 async def upload_files(
     request: Request,
     files: List[UploadFile] = File(...),
-    collection: str = Form(...),
-    db_path: str = Form(...)
+    section : str = Form(...)
 ):
     """Handle file uploads for documents."""
     try:
+         
+        selected_section = section
+        # Ensure selected_section is valid
+        if selected_section not in SECTION:
+            raise ValueError("Invalid section selected.")
+
+        collection_name = COLLECTION[SECTION.index(selected_section)]
+        db_path = DATABASE[SECTION.index(selected_section)]
+
+        logging.info(f"Selected section: {selected_section}, Collection: {collection_name}, DB Path: {db_path}")
+
         if files:
-            logging.info(f"Handling upload for collection: {collection}, DB Path: {db_path}")
+            # logging.info(f"Handling upload for collection: {collection}, DB Path: {db_path}")
             for file in files:
                 file_content = await file.read()
                 file_name = file.filename
@@ -562,7 +572,7 @@ async def upload_files(
 
                     # Load existing documents from the .json file if it exists
                     for i in range(len(DOCSTORE)):
-                        if collection in DOCSTORE[i]:
+                        if collection_name in DOCSTORE[i]:
                             coll = DOCSTORE[i]
                             break
                     existing_documents = {}
@@ -608,9 +618,18 @@ async def upload_files(
                     else:
                         # Persist the storage context if the file does not exist
                         storage_context.docstore.persist(coll)
+                     
+                    # selected_section = section
+                    # # Ensure selected_section is valid
+                    # if selected_section not in SECTION:
+                    #     raise ValueError("Invalid section selected.")
 
+                    # collection_name = COLLECTION[SECTION.index(selected_section)]
+                    # db_path = DATABASE[SECTION.index(selected_section)]
+
+                    # logging.info(f"Selected section: {selected_section}, Collection: {collection_name}, DB Path: {db_path}")
                     # Initialize vector store index and add document chunks to collection
-                    collection_instance = init_chroma_collection(db_path, collection)
+                    collection_instance = init_chroma_collection(db_path, collection_name)
 
                     embed_model = OpenAIEmbedding()
                     VectorStoreIndex(nodes, storage_context=storage_context, embed_model=embed_model)
@@ -624,7 +643,7 @@ async def upload_files(
                                 ids=chunk_ids[i : i + batch_size],
                             )
                             time.sleep(5)  # Add a retry with a delay
-                            logging.info(f"Files uploaded and processed successfully for collection: {collection}")
+                            logging.info(f"Files uploaded and processed successfully for collection: {collection_name}")  
                             return JSONResponse({"status": "success", "message": "Documents uploaded successfully."})
 
 
@@ -677,12 +696,21 @@ def init_chroma_collection(db_path, collection_name):
         raise
 
 
-@app.get("/show_documents")
+@app.post("/show_documents")
 async def show_documents(request: Request,
-                          collection_name: str = Form(...),
-                          db_path: str = Form(...)  ):
+                          section: str = Form(...)):
     """Show available documents."""
     try:
+          
+        selected_section = section
+        # Ensure selected_section is valid
+        if selected_section not in SECTION:
+            raise ValueError("Invalid section selected.")
+
+        collection_name = COLLECTION[SECTION.index(selected_section)]
+        db_path = DATABASE[SECTION.index(selected_section)]
+
+        logging.info(f"Selected section: {selected_section}, Collection: {collection_name}, DB Path: {db_path}")
 
         if not collection_name or not db_path:
             raise ValueError("Missing 'collection' or 'db_path' query parameters.")
@@ -705,22 +733,24 @@ async def show_documents(request: Request,
 
         # Get the unique document names
         doc_list = list(doc_name_to_id.keys())
+        logging.info(f"Documents retrieved successfully for collection: {collection_name}")
+        return doc_list
 
         # Logging the successful retrieval
-        logging.info(f"Documents retrieved successfully for collection: {collection_name}")
+        
 
         # Render the template with the document list
-        return templates.TemplateResponse(
-            'admin.html',
-            {
-                "request": request,
-                "section": collection_name,
-                "documents": doc_list,
-                "collection": collection_name,
-                "db_path": db_path,
-                "sections": SECTION,
-            }
-        )
+        # return templates.TemplateResponse(
+        #     'admin.html',
+        #     {
+        #         "request": request,
+        #         "section": collection_name,
+        #         "documents": doc_list,
+        #         "collection": collection_name,
+        #         "db_path": db_path,
+        #         "sections": SECTION,
+        #     }
+        # )
 
     except Exception as e:
         logging.error(f"Error showing documents: {e}")
@@ -728,18 +758,26 @@ async def show_documents(request: Request,
 
 @app.post("/delete_document")
 async def delete_document(request: Request,
-                          collection_name: str = Form(...),
-                          doc_name: str = Form(...),
-                          db_path: str = Form(...)  ):
+                         section: str = Form(...),
+                          doc_name: str = Form(...)):
     """Handle document deletion."""
     try:
+        selected_section = section
+    # Ensure selected_section is valid
+        if selected_section not in SECTION:
+            raise ValueError("Invalid section selected.")
+
+        collection_name = COLLECTION[SECTION.index(selected_section)]
+        db_path = DATABASE[SECTION.index(selected_section)]
+
+        logging.info(f"Selected section: {selected_section}, Collection: {collection_name}, DB Path: {db_path}")
         # Initialize the collection
         collection = init_chroma_collection(db_path, collection_name)
         print("document to be deleted",doc_name)
         # Retrieve metadata and IDs from the collection
         docs = collection.get()['metadatas']
         ids = collection.get()['ids']
-
+        
         # Create a dictionary mapping document names to IDs
         doc_name_to_id = {}
         for doc_id, meta in zip(ids, docs):
@@ -748,7 +786,7 @@ async def delete_document(request: Request,
                 if name not in doc_name_to_id:
                     doc_name_to_id[name] = []
                 doc_name_to_id[name].append(doc_id)
-
+        
         # Get the unique document names
         ids_to_delete = doc_name_to_id.get(doc_name, [])
 

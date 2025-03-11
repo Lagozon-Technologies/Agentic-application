@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document & Table Management</title>
+    <link rel="stylesheet" href="stats\test.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Document & Table Management</h1>
+
+        <!-- Section Selection -->
+        <section id="section-selection">
+            <label for="selected-section">Select Section:</label>
+            <select id="selected-section">
+                <option value="Adv-Manufacturing">Adv-Manufacturing</option>
+                    <option value="Adv-Inventory">Adv-Inventory</option>
+                    <option value="Adv-HumanResources(HR)">Adv-HumanResources(HR)</option>
+                    <option value="Adv-Purchasing">Adv-Purchasing</option>
+                    <option value="Adv-Sales">Adv-Sales</option>
+                    <option value="Adv-Products">Adv-Products</option>
+            </select>
+            <p id="managing-for">Managing documents for collection: <span id="collection-name">Finance_documents</span></p>
+        </section>
+
+        <!-- Document Actions -->
+        <section id="document-actions">
+            <div class="button-group-vertical">
+                <button id="show-docs-btn">Show Documents</button>
+                <button id="upload-btn">Insert Document</button>
+                <button id="delete-doc-btn">Delete Document</button>
+                <button id="get-tables-btn">Get Tables</button>
+            </div>
+        </section>
+        <section id="selected-functionality">
+            <!-- Here the functions append as clicked-->
+            <div id="show-documents-section" class="hidden">
+                <div id="documents-list"></div>
+            </div>
+            <div id="upload-section" class="hidden">
+                <label for="file-upload">Select files to insert:</label>
+                <input type="file" id="file-upload" multiple>
+                <button id="actual-upload-btn">Upload</button>
+                <div id="upload-result"></div>
+            </div>
+            <div id="delete-section" class="hidden">
+                <label for="doc-to-delete">Document to Delete:</label>
+                <select id="doc-to-delete"></select>
+                <button id="actual-delete-btn">Delete</button>
+                <div id="delete-result"></div>
+            </div>
+            <div id="get-tables-section" class="hidden">
+                <div id="tables-list"></div>
+            </div>
+        </section>
+    </div>
+
+    <script src="stats\test.js"></script>
+</body>
+</html>
